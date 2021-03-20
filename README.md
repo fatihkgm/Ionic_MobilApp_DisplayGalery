@@ -13,3 +13,15 @@
 👉  ionic serve
 👉  ionic g service services/photo
 
+when done 
+
+build ionic 
+
+👉 ionic build or npx ionic build
+
+
+add platform android or ios
+
+👉 ionic cap add android 
+
+too create www project  : npx ionic cap copy
