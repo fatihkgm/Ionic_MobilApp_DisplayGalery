@@ -11,3 +11,5 @@
 ☑️ See if it works
 
 👉  ionic serve
+👉  ionic g service services/photo
+
