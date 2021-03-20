@@ -7,5 +7,9 @@ import { PhotoService } from "../services/photo.service";
   styleUrls: ["tab2.page.scss"],
 })
 export class Tab2Page {
-  constructor() {}
+  constructor(public photoService:PhotoService) {}
+
+  addPhotoToGallery(){
+    this.photoService.addNewToGallery();
+  }
 }
