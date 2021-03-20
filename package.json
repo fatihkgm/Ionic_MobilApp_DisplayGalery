@@ -1,7 +1,7 @@
 {
-  "name": "galaryApp",
+  "name": "Ionic_MobilApp_DisplayGalery",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Felix Gokmen",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
