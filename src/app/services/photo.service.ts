@@ -1,3 +1,4 @@
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { Injectable } from "@angular/core";
 import {
   Plugins,
@@ -16,7 +17,7 @@ const { Camera, Filesystem, Storage } = Plugins;
 })
 export class PhotoService {
   public photos: Photo[] = [];
-  private PHOTO_STORAGE:string="photos";
+  private PHOTO_STORAGE: string = "photos";
   constructor() {}
   public async addNewToGallery() {
     const capturedPhoto = await Camera.getPhoto({
@@ -26,6 +27,22 @@ export class PhotoService {
     });
     const savedImage = await this.savePicture(capturedPhoto);
     this.photos.unshift(savedImage);
+    Storage.set({
+      key: this.PHOTO_STORAGE,
+      value: JSON.stringify(this.photos),
+    });
+  }
+
+  public async loadSaved() {
+    const photoList = await Storage.get({ key: this.PHOTO_STORAGE });
+    this.photos = JSON.parse(photoList.value) || [];
+    for (let photo of this.photos) {
+      const readFile = await Filesystem.readFile({
+        path: photo.filepath,
+        directory: FilesystemDirectory.Data,
+      });
+      photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
+    }
   }
 
   private async savePicture(cameraPhoto: CameraPhoto) {
@@ -40,6 +57,12 @@ export class PhotoService {
 
       directory: FilesystemDirectory.Data,
     });
+    return {
+      filepath:fileName,
+      webviewPath:cameraPhoto.webPath
+
+    }
+
   }
 
   private async readAsBase64(CameraPhoto: CameraPhoto) {
